@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>HTML5 + AIception faces API = faceteroids</title>
 </head>
+
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="js/aiception.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/aiception.js"></script>
 
-<script type="text/javascript">
-
+    <script type="text/javascript">
     var token = "YOUR_TOKEN_HERE"
-    
-    var image_url = "https://upload.wikimedia.org/wikipedia/en/8/86/Einstein_tongue.jpg"
 
+    var image_url = "https://upload.wikimedia.org/wikipedia/en/8/86/Einstein_tongue.jpg"
     faces(token, image_url, function(error, success) {
         if (error) {
             console.log(error);
@@ -20,7 +20,7 @@
             console.log(JSON.stringify(success, null, 2));
         }
     });
-</script>
-
+    </script>
 </body>
+
 </html>
