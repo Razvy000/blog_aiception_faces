@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML5 + AIception faces API = faceteroids</title>
+</head>
+<body>
+
+<canvas id="myCanvas" width="100" height="100" ></canvas>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="js/aiception.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+        var token = "YOUR_TOKEN_HERE"
+
+        var image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Albert_Einstein_and_Charlie_Chaplin_-_1931.jpg/800px-Albert_Einstein_and_Charlie_Chaplin_-_1931.jpg"
+
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+
+        var drawRect = function(x, y, width, height){
+            context.beginPath();
+            context.rect(x, y, width, height);
+            context.lineWidth = 8;
+            context.strokeStyle = 'green';
+            context.stroke();
+        }
+
+        var drawFaces = function(img){
+            faces(token, image_url, function(error, success) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(JSON.stringify(success, null, 2));
+
+                    for(faceid in success.answer.faces){
+                            face = success.answer.faces[faceid] 
+                            drawRect(face[0], face[1], face[2]-face[0], face[3]-face[1])
+                    }             
+                }
+            });
+        }
+
+        var loadImage = function(){
+            var img = new Image;
+            img.onload = function() {
+                canvas.height = img.height;
+                canvas.width = img.width;
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.drawImage(this, 0, 0);
+            };
+            img.src = image_url;
+
+            drawFaces(img);   
+        }
+        
+        loadImage();       
+
+    }); // end ready    
+</script>
+
+</body>
+</html>
