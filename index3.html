@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>HTML5 + AIception faces API = faceteroids</title>
 </head>
+
 <body>
 
-<canvas id="myCanvas" width="100" height="100" ></canvas>
-<canvas id="myCanvas2" width="100" height="100" ></canvas>
+    <canvas height="100" id="myCanvas" width="100"></canvas>
+    <canvas height="100" id="myCanvas2" width="100"></canvas>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="js/aiception.js"></script>
-
-<script type="text/javascript">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/aiception.js"></script>
+    
+    <script type="text/javascript">
     $(document).ready(function() {
 
         var token = "YOUR_TOKEN_HERE"
@@ -25,7 +26,7 @@
         var canvas2 = document.getElementById('myCanvas2');
         var context2 = canvas2.getContext('2d');
 
-        var drawRect = function(x, y, width, height){
+        var drawRect = function(x, y, width, height) {
             context.beginPath();
             context.rect(x, y, width, height);
             context.lineWidth = 8;
@@ -33,29 +34,29 @@
             context.stroke();
         }
 
-        var drawFaces = function(img){
+        var drawFaces = function(img) {
             faces(token, image_url, function(error, success) {
                 if (error) {
                     console.log(error);
                 } else {
                     console.log(JSON.stringify(success, null, 2));
 
-                    for(faceid in success.answer.faces){
-                            face = success.answer.faces[faceid] 
-                            drawRect(face[0], face[1], face[2]-face[0], face[3]-face[1])
-                        if(faceid == 0){
-                            src_width =  face[2]-face[0]
-                            src_height =face[3]-face[1]
+                    for (faceid in success.answer.faces) {
+                        face = success.answer.faces[faceid]
+                        drawRect(face[0], face[1], face[2] - face[0], face[3] - face[1])
+                        if (faceid == 0) {
+                            src_width = face[2] - face[0]
+                            src_height = face[3] - face[1]
                             canvas2.height = img.height;
                             canvas2.width = img.width;
                             context2.drawImage(img, face[0], face[1], src_width, src_height, 0, 0, src_width, src_height);
                         }
-                    }             
+                    }
                 }
             });
         }
 
-        var loadImage = function(){
+        var loadImage = function() {
             var img = new Image;
             img.onload = function() {
                 canvas.height = img.height;
@@ -65,13 +66,13 @@
             };
             img.src = image_url;
 
-            drawFaces(img);   
+            drawFaces(img);
         }
-        
-        loadImage();       
 
-    }); // end ready    
-</script>
+        loadImage();
 
+    }); // end ready
+    </script>
 </body>
+
 </html>
